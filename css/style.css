@@ -1,0 +1,158 @@
+.rangeslider,
+.rangeslider__fill {
+  display: block;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+  -webkit-box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3);
+  -moz-box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3);
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+.rangeslider {
+  position: relative;
+  background: #e6e6e6;
+}
+.rangeslider--horizontal {
+  width: 100%;
+  height: 10px;
+}
+.rangeslider--vertical {
+  width: 20px;
+  min-height: 150px;
+  max-height: 100%;
+}
+.rangeslider--disabled {
+  opacity: .4;
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=40);
+}
+.rangeslider__fill {
+  position: absolute;
+  background: #0f0;
+}
+.rangeslider--horizontal .rangeslider__fill {
+  top: 0;
+  height: 100%;
+}
+.rangeslider--vertical .rangeslider__fill {
+  bottom: 0;
+  width: 100%;
+}
+.rangeslider__handle {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  margin-top: -10px !important;
+  margin-left: 0px !important;
+  cursor: pointer;
+  opacity: .9;
+  border: 0 solid transparent;
+  border-radius: 50%;
+  background: #fff;
+  background-image: -moz-linear-gradient(top, #ffffff, #f9f9f9);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ffffff), to(#f9f9f9));
+  background-image: -webkit-linear-gradient(top, #ffffff, #f9f9f9);
+  background-image: linear-gradient(to bottom, #ffffff, #f9f9f9);
+  background-repeat: repeat-x;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+}
+.rangeslider__handle::before,
+.rangeslider__handle::after {
+  position: absolute;
+  left: 9px;
+  display: block;
+  width: 12px;
+  height: 2px;
+  content: '';
+  background: rgba(0, 0, 0, 0.25);
+}
+.rangeslider__handle::before {
+  top: 12px;
+}
+.rangeslider__handle::after {
+  top: 16px;
+}
+.rangeslider--horizontal .rangeslider__handle {
+  touch-action: pan-y;
+  -ms-touch-action: pan-y;
+}
+.rangeslider--vertical .rangeslider__handle {
+  left: -10px;
+  touch-action: pan-x;
+  -ms-touch-action: pan-x;
+}
+input[type='range']:focus + .rangeslider .rangeslider__handle {
+  -webkit-box-shadow: 0 0 8px rgba(255, 0, 255, 0.9);
+  -moz-box-shadow: 0 0 8px rgba(255, 0, 255, 0.9);
+  box-shadow: 0 0 8px rgba(255, 0, 255, 0.9);
+}
+header {
+  color: #fff;
+  background: #43ac43;
+}
+header h2 {
+  font-size: 28px;
+  font-weight: normal;
+  padding: 40px;
+  text-align: center;
+}
+.water {
+  position: relative;
+  width: 100%;
+  height: 30px;
+  background: #43ac43;
+}
+.water .water-1 {
+  position: absolute;
+  width: 100%;
+  height: 30px;
+  -webkit-animation: wave-animation-1 3.5s infinite linear;
+  animation: wave-animation-1 3.5s infinite linear;
+  background: url('../images/water-1.svg') repeat-x;
+  background-size: 600px;
+}
+.water .water-2 {
+  position: absolute;
+  top: 5px;
+  width: 100%;
+  height: 30px;
+  -webkit-animation: wave-animation-2 6s infinite linear;
+  animation: wave-animation-2 6s infinite linear;
+  background: url('../images/water-2.svg') repeat-x;
+  background-size: 600px;
+}
+.loan-form {
+  margin-bottom: 50px;
+}
+.loan-form small {
+  font-size: 13px;
+  color: #999;
+}
+.loan-form .loan-cell::before {
+  border-top: 0 none transparent;
+}
+.loan-form .loan-amount {
+  text-align: right;
+}
+.loan-form .loan-amount output {
+  padding-right: 40px;
+  color: #666;
+}
+.loan-form .weui_btn_primary {
+  margin-bottom: 50px;
+}
+@keyframes wave-animation-1 {
+  0% {
+    background-position: 0 top;
+  }
+  100% {
+    background-position: 600px top;
+  }
+}
+@keyframes wave-animation-2 {
+  0% {
+    background-position: 0 top;
+  }
+  100% {
+    background-position: 600px top;
+  }
+}

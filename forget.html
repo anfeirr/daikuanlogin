@@ -1,0 +1,175 @@
+<!DOCTYPE>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta http-equiv="x-ua-compatible" content="ie=edge">
+		<meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+		<meta name="apple-mobile-web-app-capable" content="no" />
+		<meta name="format-detection" content="telephone=no" />
+		<meta name="keywords" content="">
+		<meta name="description" content="">
+		<link href="css/bootstrap.css" rel="stylesheet">
+		<script src="js/jquery.js"></script>
+		<script src="js/jquery.form.js"></script>
+		<script src="js/layer.js"></script>
+		<link type="text/css" rel="stylesheet" href="css/forget.css">
+		<title>修改密码</title>
+	</head>
+	<body>
+		<div class="res_con">
+			<form action="/index.php/Index/forgetpwd.shtml" method="post" id="findForm">
+		        <ul>
+		            <li>
+<input type="number" placeholder="请输入11位数字" class="user">
+		            </li>
+		            <li class="yz">
+		            	<input type="text" placeholder="请输入验证码" class="yzm">
+		            	<button type="button">发送验证码</button>
+		            </li>
+		            <li class="fu_pwd">
+		            	<input type="password" placeholder="请修改密码" class="pwd">
+		            </li>
+		        </ul>
+		        <button class="abut1" id="findBtn" disabled="disabled" type="button">提交</button>
+			</form>
+            <div class="verify">
+            	<p>
+            		<img src="/index.php/Index/verify.shtml" alt="看不清,换一张" />
+            	</p>
+            	<p>
+            		<input type="number" value="" placeholder="输入验证码" />
+            	</p>
+            	<p>
+            		<a class="btn" id="verifySendcode">确定</a>
+            		<a class="btn btnred" id="verifyClose">取消</a>
+            	</p>
+            </div>
+	    </div>
+	    <div class="zhezhao"></div>
+	</body>
+	<script>
+	    	var resendTime = 0;
+	    	var resendFun;
+	    	$(function(){
+	    		/*找回密码*/
+	    		$(".res_con .yz button").on('click',function(){
+	    			if(!cvphp.ismobile( $("#findForm .user").val() )){
+	    				cvphp.msg({
+	    					content: '手机号码不符合规范'
+	    				});
+	    				return false;
+	    			}
+	    			$(".verify input").val('');
+	    			var imgUrl = "/index.php/Index/verify/0/t/1/randTime.shtml";
+	    			imgUrl = imgUrl.replace(/randTime/,Date.parse(new Date()));
+	    			$(".verify img").attr('src',imgUrl);
+	    			$(".verify").show();
+	    			$(".zhezhao").show();
+	    			$(".verify input").focus();
+	    		});
+	    		$("#verifyClose").on('click',function(){
+	    			$(".verify").hide();
+	    			$(".zhezhao").hide();
+	    		});
+	    		$(".verify img").on('click',function(){
+	    			var imgUrl = "/index.php/Index/verify/0/t/1/randTime.shtml";
+	    			imgUrl = imgUrl.replace(/randTime/,Date.parse(new Date()));
+	    			$(".verify img").attr('src',imgUrl);
+	    		});
+	    		$("#verifySendcode").on('click',function(){
+	    			$(".verify").hide();
+	    			$(".zhezhao").hide();
+	    			var code = $(".verify input").val();
+	    			if(code.length != 4){
+						cvphp.msg({
+	    					content: '请输入正确的图形验证码',
+	    				});
+	    				return ;
+	    			}
+	    			cvphp.post(
+	    				"/index.php/Sms/sendcode.shtml",
+	    				{
+	    					verify:code,
+	    					user:$("#findForm .user").val(),
+	    					type:'find'
+	    				},
+	    				function(data){
+		    				if(data.status != 1){
+		    					cvphp.msg({
+		    						content: data.info,
+		    					});
+		    				}else{
+		    					resendTime = 59;
+		    					resendFun = setInterval(resend,1000);
+				    			$(".verify").hide();
+				    			$(".zhezhao").hide();
+		    				}
+	    				}
+	    			);
+	    		});
+	    		$("#findForm .yzm").on('input',function(){
+	    			var code = $(this).val();
+	    			if(code.length == 4){
+	    				$("#findBtn").removeAttr('disabled');
+	    				$("#findBtn").removeClass('abut1');
+	    				$("#findBtn").addClass('abut');
+	    			}else{
+	    				$("#findBtn").attr('disabled',"true");
+	    				$("#findBtn").removeClass('abut');
+	    				$("#findBtn").addClass('abut1');
+	    			}
+	    		});
+	    		$("#findBtn").on('click',function(){
+	    			if(!cvphp.ismobile( $("#findForm .user").val() )){
+	    				cvphp.msg({
+	    					content: '手机号码不符合规范'
+	    				});
+	    				return false;
+	    			}
+	    			if($("#findForm .yzm").val().length != 4){
+	    				cvphp.msg({
+	    					content: '请输入短信验证码'
+	    				});
+	    				return false;
+	    			}
+	    			if($("#findForm .pwd").val().length < 6 || $("#findForm .pwd").val().length > 18){
+	    				cvphp.msg({
+	    					content: '请输入6-18位登录密码'
+	    				});
+	    				return false;
+	    			}
+	    			cvphp.post(
+	    				"/index.php/Index/forgetpwd.shtml",
+	    				{
+	    					username:$("#findForm .user").val(),
+	    					code:$("#findForm .yzm").val(),
+	    					password:$("#findForm .pwd").val()
+	    				},
+	    				function(data){
+		    				if(data.status != 1){
+		    					cvphp.msg({
+		    						content: data.info,
+		    					});
+		    				}else{
+		    					cvphp.msg({
+		    						content: '密码找回成功',
+		    					});
+		    					setTimeout(function(){window.location.href = data.url;},3000);
+		    				}
+	    				}
+	    			);
+	    		});
+	    	});
+	    	function resend(){
+	    		if(resendTime == 1){
+	    			$(".res_con .yz button").html('重新发送');
+	    			clearInterval(resendFun);
+	    			$(".res_con .yz button").removeAttr('disabled');
+	    		}else{
+	    			resendTime--;
+	    			$(".res_con .yz button").html(resendTime + ' 秒重试');
+	    			$(".res_con .yz button").attr('disabled',"true");
+	    		}
+	    	}
+	</script>
+</html>

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+	<head>
+		<meta charset="utf-8" />
+		<meta http-equiv="x-ua-compatible" content="ie=edge">
+		<meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+		<meta name="apple-mobile-web-app-capable" content="no" />
+		<meta name="format-detection" content="telephone=no" />
+		<meta name="keywords" content="">
+		<meta name="description" content="">
+		<link href="css/bootstrap.css" rel="stylesheet">
+		<script src="js/jquery.js"></script>
+		<script src="js/jquery.form.js"></script>
+		<link href="css/login.css" rel="stylesheet">
+		<title>登录</title>
+	</head>
+	<body>
+		<div class="logo">
+	    	<img src="images/re_logo.png">
+	    </div>
+	    <div class="login_res">
+	     	<div class="tab">
+	        	<ul>
+	            	<li>
+	                	<em></em>
+	                    <em></em>
+	                    <span>登录</span>
+	                </li>
+	                <li class="action">
+	                	<em></em>
+	                    <em></em>
+	                    <span>注册</span>
+	                </li>
+	            </ul>
+	       </div>
+	        <div class="con">
+	            <div class="login_con">
+		            	<ul>
+		                	<li>
+		                		<input type="number" placeholder="请输入11位数字" class="user" name="username">
+		                	</li>
+		                    <li class="fu_pwd">
+		                    	<input type="password" placeholder="请输入登录密码" class="pwd" name="password">
+		                    	<a href="forget.html">忘记密码？</a>
+		                    </li>
+		                </ul>
+		                <button class="abut" type="button" id="loginBtn">登录</button>
+	            </div>
+	            <div class="res_con">
+		            	<ul>
+		                	<li>
+		                		<input type="text" placeholder="请输入11位数字" class="user">
+		                	</li>
+		                    <li class="yz">
+		                    	<input type="text" placeholder="请输入验证码" class="yzm">
+		                    	<button type="button">发送验证码</button>
+		                    </li>
+		                    <li class="fu_pwd">
+		                    	<input type="password" placeholder="请输入登录密码" class="pwd">
+		                    </li>
+		                </ul>
+		                <p><img src="images/queren.png">我以阅读并同意<a href="">《xxx服务协议》</a></p>
+		                <button class="abut1" type="button" id="regBtn" disabled="disabled">注册</button>
+		                <div class="verify">
+		                	<p>
+		                		<img src="" alt="看不清,换一张" />
+		                	</p>
+		                	<p>
+		                		<input type="number" value="" placeholder="输入验证码" />
+		                	</p>
+		                	<p>
+		                		<a class="btn" id="verifySendcode">确定</a>
+		                		<a class="btn btnred" id="verifyClose">取消</a>
+		                	</p>
+		                </div>
+					</form>
+	            </div>
+	        </div>
+	    </div>
+	    <div class="zhezhao"></div>
+	    <div class="footer">
+	    	<img src="images/logo_foot.png">
+	    </div>
+	    
+	    <script>
+	    	$(function(){
+			//登录注册切换
+				$(".tab li").click(function(){
+					$(this).removeClass("action")
+					var index=$(this).index();
+					$(this).siblings().addClass("action");
+					$(".con div:eq("+index+")").show();
+					$(".con div:eq("+index+")").siblings().hide();
+					
+				});
+	    	});
+	    </script>
+	</body>
+</html>
